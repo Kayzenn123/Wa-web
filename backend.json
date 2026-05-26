@@ -1,0 +1,74 @@
+
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile and authentication data.",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "format": "email" },
+        "password_hash": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["email", "password_hash"]
+    },
+    "Workflow": {
+      "title": "Workflow",
+      "description": "A user-defined automation workflow consisting of nodes and edges.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "isActive": { "type": "boolean" },
+        "nodes": { "type": "array" },
+        "edges": { "type": "array" },
+        "webhookPath": { "type": "string" },
+        "userId": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "nodes", "edges", "userId"]
+    },
+    "Execution": {
+      "title": "Execution",
+      "description": "A record of a workflow execution run.",
+      "type": "object",
+      "properties": {
+        "workflowId": { "type": "string" },
+        "status": { "type": "string", "enum": ["pending", "running", "success", "failed"] },
+        "graphLog": { "type": "object" },
+        "startedAt": { "type": "string", "format": "date-time" },
+        "finishedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["workflowId", "status", "startedAt"]
+    },
+    "Credential": {
+      "title": "Credential",
+      "description": "Encrypted external service credentials.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "serviceType": { "type": "string" },
+        "encryptedData": { "type": "string" },
+        "userId": { "type": "string" }
+      },
+      "required": ["name", "serviceType", "encryptedData", "userId"]
+    }
+  },
+  "auth": {
+    "providers": ["google.com"]
+  },
+  "firestore": {
+    "/workflows/{workflowId}": {
+      "schema": "Workflow",
+      "description": "Collection of automation workflows."
+    },
+    "/executions/{executionId}": {
+      "schema": "Execution",
+      "description": "Log of workflow executions."
+    },
+    "/credentials/{credentialId}": {
+      "schema": "Credential",
+      "description": "Encrypted user credentials."
+    }
+  }
+}
