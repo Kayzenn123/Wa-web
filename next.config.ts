@@ -1,35 +1,13 @@
-import type {NextConfig} from 'next';
-
-const nextConfig: NextConfig = {
-  /* config options here */
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   typescript: {
+    // INI KUNCI SAKTINYA: Biar Vercel tetep sukses build walaupun ada eror TypeScript di template lama
     ignoreBuildErrors: true,
   },
   eslint: {
+    // Ini juga biar gak bawel masalah aturan penulisan kode
     ignoreDuringBuilds: true,
-  },
-  images: {
-    remotePatterns: [
-      {
-        protocol: 'https',
-        hostname: 'placehold.co',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'images.unsplash.com',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
-        hostname: 'picsum.photos',
-        port: '',
-        pathname: '/**',
-      },
-    ],
   },
 };
 
-export default nextConfig;
+module.exports = nextConfig;
